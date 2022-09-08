@@ -51,7 +51,20 @@ print(fooDriver)
 
 
 --Enter in your favorite number and I'll halve it
-local respN
+--[[local respN
 io.write("Say a number, I\'ll halve it.")
 respN = io.read()
-print("Half of your number is " .. respN/2 .. ".")
+print("Half of your number is " .. respN/2 .. ".")]]
+
+print("1".."1")
+
+local player = [[Rocko]]
+
+print(player)
+
+local haveCards = 6
+local soldCards = 2
+
+a = haveCards - soldCards
+
+print(a)
