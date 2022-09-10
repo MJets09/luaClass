@@ -1,7 +1,7 @@
 --1. operators
 --2. operand
 
---3.
+--[[3.
 print(19/10)
 --One slash you get decimals
 --4.
@@ -15,7 +15,7 @@ print(-19//10)
 --Double slashes return integer
 
 --7.
-print(10 - 5 - 1 / 2 + 8 * 2 + 1)
+print(10 - 5 - 1 / 2 + 8 * 2 + 1)]]
 
 --8. = in lua assigns while in math = is equals
 
@@ -57,24 +57,51 @@ print("We would split " .. coconutsC//people .. " between us, with " .. leftOver
 
 --.4 Only have to write the test condition once, runs faster
 
+--[[5.
+local userScore
 
+io.write("What did you get on your score on your test? " )
+userScore = io.read("*n")
+print(userScore)
 
-local numMonsters, msg
-
-io.write('How many monsters are there? ')
-numMonsters = io.read("*n")
-
-if (numMonsters > 0) then
-    msg = 'Way to go!!!'
-    print(msg)
-elseif (numMonsters > 2) then
-    msg = 'Only a few left!'
-    print(msg)
-elseif (numMonsters > 5) then
-    msg = 'Still more to go!'
-    print(msg)
+if userScore >= 90 then
+  print("A")
+elseif userScore >=80 then
+print("B")
+elseif userScore >=70 then
+print("C")
+elseif userScore >=60 then
+print("D")
 else
-    msg = 'True spirit.'
-    print(msg)
-end
+print("F")
+end]]
 
+--6. math.random(1,10000)
+--7. math.random(-1000, 10000)
+--8. math.random()
+--9. Get the same random generated numbers
+--10. math.random(os.time())
+--11. <
+--12. foo == 'antimony'
+--13. foo ~= 'boron'
+--[[14.
+local dueces, sum
+
+dueces = 0
+sum = 0
+
+while dueces < 100 do
+sum = sum + dueces
+dueces = dueces + 2
+end
+print(sum)]]
+
+--[[15. for i = 1, 10 do
+  print('i ' .. i .. ' a skunk')
+  i = i +1
+end]]
+
+--16.
+for i = 100, 0, -7 do
+    print(i)
+end

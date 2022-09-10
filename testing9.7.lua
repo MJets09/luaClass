@@ -46,6 +46,14 @@ isCorrect = false
 end
 end]]
 
-for i = 1, 10 do
-  print(i)
-  end
+
+local sum,i 
+
+sum = 0
+i = 1
+
+while i <= 3 do
+  sum = sum + i
+  i = i+ 1
+end
+print(sum)
