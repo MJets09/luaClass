@@ -26,29 +26,26 @@ print("Alright bro your old enough")
 end]]
 
 
---[[local randomNum, choiceNum
+--[[local randomNum, choiceNum, isCorrect
 
 math.randomseed(os.time())
 
-io.write("Guess a number through 1-100! ")
-randomNum = math.random(100)
-choiceNum = io.read("*n")
+randomNum = math.random(10)
 print(randomNum)
-if choiceNum == randomNum then
-  print("Correct!")
+
+while (not isCorrect) do
+  io.write("Guess a number through 1-10! ")
+  choiceNum = io.read("*n")
+  if (choiceNum == randomNum) then
+  print("Correct")
+  isCorrect = true
 else
-  print("Guess again")
-end]]
-
-local i, sum
-
-i = 1
-sum = 0
-
-while i <= 100 do
-  sum = sum + 1
-  i = i +1
+  print("Incorrect")
+isCorrect = false
 
 end
+end]]
 
-  print(sum)
+for i = 1, 10 do
+  print(i)
+  end
