@@ -1,8 +1,14 @@
-function noPlaceLike(foo)
-    local bar = math.random(foo)
-    for i = 1, bar do
-        print("There's no place like home.")
-    end
+math.randomseed(os.time())
+
+local charset = "apbeecodargahajaljukolinmitmurnaporriesemsotatwayya"
+function randomString(length)
+	local ret = {}
+	local r
+	for i = 1, length do
+		r = math.random(1, #charset)
+		table.insert(ret, charset:sub(r, r))
+	end
+	return table.concat(ret)
 end
 
-noPlaceLike(3)
+print(randomString(4))
