@@ -1,103 +1,92 @@
-require("example")
---[[function love.draw()
- love.graphics.setColor(255,0,0)
- love.graphics.print("The world is Yours!!!") 
- love.graphics.circle("line", 200, 200, 100)
- love.graphics.circle("line", 300, 200, 100)
- love.graphics.circle("line", 400, 200, 100)
- love.graphics.circle("line", 500, 200, 100)
- love.graphics.setColor(0,255,0)
- love.graphics.rectangle("line", 0,0, 800, 600)
-end]]
-
-
---[[function love.load()
-  x = 100
-  move = true
-  artist = {"nas","jay","ye"}
-  rect = {}
-  rect.width = 200
-  rect.x = 400
-  rect.y = 200
-  rect.height = 100
-  rect.speed = 200
+--[[function enabledDrawCircle()
+  isDraw = true
 end
 
-function love.draw()
-    love.graphics.rectangle("line", x, 50, 200, 150)
-    for i, ani in ipairs(artist) do
-      love.graphics.print(ani,300, 200 + 10 * i)
-    end
-    love.graphics.rectangle("fill", rect.x, rect.y, rect.width, rect.height)
-end
-
-
-function love.update(dt)
-if love.keyboard.isDown("right") then
-    rect.x = rect.x + rect.speed * dt
-  elseif love.keyboard.isDown("left") then
-    rect.x = rect.x - rect.speed * dt
-    
-end
-end]]
-
---[[function love.load()
-   circleSize = 30
-   circleSpeed = 300
-   
-   circleX = 300
-   circleY = 300
-   
-   isMovingRight = true
-end
-
-
-
-function love.update(dt)
-  
-if isMovingRight and circleX < (love.graphics.getWidth() - circleSize ) then
-  isMovingRight = true
-else if isMovingRight and circleX > (love.graphics.getWidth() - circleSize ) then
-    isMovingRight = false
-elseif not isMovingRight and circleX > (love.graphics.getWidth() + circleSize) then
-isMovingRight = false
-elseif not isMovingRight and circleX <= circleSize then
-isMovingRight = true
-end
-end
-
-if isMovingRight == true then
-  circleX = circleX + circleSpeed * dt
-  else 
-  circleX = circleX - circleSpeed * dt
-end
-
-end
-
-function love.draw()
- love.graphics.circle("line", circleX, circleY, circleSize) 
-end]]
-
-function createCircle(x,y,radius, hSpeed)
-  local theCircle = {
-    x = x_,
-    y = y_,
-    radius = radius_,
-    hSpeed = hSpeed_,
-    
-    }
-  return theCircle
-
-end
 
 function love.load()
- myCircle = createCircle(300,300,200,100)
+  tick = require "tick"
+  isDraw = false
+  drawRec = false
+  tick.delay(enabledDrawCircle, 2)
+  tick.delay(function() drawRec = true end, 3)
+  tick.recur(function() isDraw = not isDraw end, 1) -- toggle isDraw
 end
 
-function love.update()
+
+function love.update(dt)
+  
+ tick.update(dt)
+ 
+end 
+  
+  
+ function love.draw()
+  if drawRec then
+  love.graphics.rectangle("line", 100,100,200,100)
+  end
+   
+  if isDraw then
+     love.graphics.circle("fill", 400,400,50)
+  end
+    
+  end
+
+end]]
+
+math.randomseed(os.time())
+
+--[[function love.load()
+    Object = require "classic"
+    --Don't forget to load the file
+    require "rectangle"
+
+    r1 = Rectangle(math.random(1,300),math.random(1,300),math.random(1,300),math.random(1,300))
+    r2 = Rectangle(math.random(1,300),math.random(1,300),math.random(1,300),math.random(1,300))
+    print(r1.test, r2.test)
+    
+end
+
+
+
+function love.update(dt)
+    r1:update(dt)
+    r2.update(r2, dt) --same thing as line 52
+end
+
+function love.draw()
+    r1:draw()
+    r2:draw()
+end]]
+
+
+function love.load()
+x = 30
+y = 30
+
+
+stages = {"forest", "ice cavern", "plains"}
+print(stages)
+end
+
+
+
+function love.update(dt)
+  
+if love.keyboard.isDown("up") then
+  y = y - 1
+elseif love.keyboard.isDown("down") then
+  y = y + 1
+elseif love.keyboard.isDown("right") then
+  x = x + 1
+elseif love.keyboard.isDown("left") then
+  x = x - 1
+end
 
 end
 
 function love.draw()
-  
+  love.graphics.rectangle("line", x,y,200,100)
+  for i = 1, #stages do
+    love.graphics.print(stages[i], 400, 300 + 10 * i)
   end
+end
