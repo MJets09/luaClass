@@ -13,6 +13,8 @@ function love.load()
         width = 150,
         height = 120
     }
+    
+    score = 0
 end
 
 function love.update(dt)
@@ -21,7 +23,7 @@ function love.update(dt)
 end
 
 function love.draw()
-
+love.graphics.print("Score: " .. score, 700, 200)
     
       --We create a local variable called mode
     local mode
@@ -29,6 +31,9 @@ function love.draw()
     if checkCollision(r1, r2) then
         --If there is collision, draw the rectangles filled
         mode = "fill"
+        
+        score = score + 1
+        
     else
         --else, draw the rectangles as a line
         mode = "line"
@@ -37,6 +42,7 @@ function love.draw()
     --Use the variable as first argument
     love.graphics.rectangle(mode, r1.x, r1.y, r1.width, r1.height)
     love.graphics.rectangle(mode, r2.x, r2.y, r2.width, r2.height)
+    love.graphics.print(score)
 end
 
 function checkCollision(a, b)

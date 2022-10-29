@@ -35,7 +35,7 @@ end]]
 
 math.randomseed(os.time())
 
---[[function love.load()
+function love.load()
     Object = require "classic"
     --Don't forget to load the file
     require "rectangle"
@@ -56,10 +56,10 @@ end
 function love.draw()
     r1:draw()
     r2:draw()
-end]]
+end
 
 
-function love.load()
+--[[function love.load()
 x = 30
 y = 30
 
@@ -89,4 +89,4 @@ function love.draw()
   for i = 1, #stages do
     love.graphics.print(stages[i], 400, 300 + 10 * i)
   end
-end
+end]]
