@@ -4,7 +4,7 @@ function love.load()
   require "orange"
   
   --timer
-  remaining_time = 2
+  remaining_time = 10
   gameover = false
   
   
@@ -24,7 +24,7 @@ function love.load()
   
   
   --Create a Orange image that shows up randomly
-  o1 = Orange(orange, math.random(1,300), 12, 300)
+  o1 = Orange(orange, math.random(1,700), 12, 300)
   --orange's height
   print(o1.height)
   
@@ -59,25 +59,38 @@ function love.update(dt)
        
     end
     
-    remaining_time = remaining_time - dt
+    remaining_time = remaining_time - 1 * dt
     
     if remaining_time <= 0 then
       
       gameover = true
+      o1.x = 900
+      o1.y = 900
       
-      end
+    end
   
   end
   
   --Rain circles
     o1.y = o1.y + o1.speed * dt
+    
+    if o1.y > 601 then
+      
+       o1.x = math.random(1,700)
+       o1.y = 12
+       
+    end
 
 end
 
 
 function love.draw()
-  love.graphics.print("Score: " .. score, 700, 200)
-  love.graphics.print(remaining_time, 600, 200)
+  
+  love.graphics.print("Score: " .. score, 600, 200)
+  love.graphics.print("Timer: " .. remaining_time, 600, 150)
+  love.graphics.print("Unable to figure out how to get timer to go down", 400, 100)
+  love.graphics.print("as timer only goes down by 1 if left arrow key is pressed", 400, 112)
+  love.graphics.print("Other than that, gameover screen works. Any suggestion to correct timer?", 300, 130)
   love.graphics.draw(crate.image,crate.x,crate.y)
   
 
@@ -85,16 +98,17 @@ function love.draw()
   o1:draw()
   
   if gameover then
-    love.graphics.print("Gameover", 400,300)
+    love.graphics.print("Gameover, your score is " .. score, 300,200)
+
   end
   
   if checkCollision(crate, o1) then
-        --If there is collision, draw the rectangles filled
       score = score +1
-      o1.x = math.random(1,300)
+      o1.x = math.random(1,800)
       o1.y = 12
-      --crate.image = love.graphics.newImage("rsc/fullCrate.png")
   end
+  
+--o1.x = math.random(1,800)
   
   if score < 1 then
     crate.image = love.graphics.newImage("rsc/crate.png")
