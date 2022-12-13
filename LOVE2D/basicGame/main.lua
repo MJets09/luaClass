@@ -4,7 +4,7 @@ function love.load()
   require "orange"
   
   --timer
-  remaining_time = 10
+  remaining_time = 5
   gameover = false
   
   
@@ -64,8 +64,10 @@ function love.update(dt)
     if remaining_time <= 0 then
       
       gameover = true
-      o1.x = 900
-      o1.y = 900
+    
+    if key == 'return' then
+      love.load()
+      end
       
     end
   
@@ -98,6 +100,7 @@ function love.draw()
   o1:draw()
   
   if gameover then
+    love.graphics.setColor(1, 0.5,0)
     love.graphics.print("Gameover, your score is " .. score, 300,200)
 
   end

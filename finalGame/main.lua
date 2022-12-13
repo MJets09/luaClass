@@ -1,96 +1,118 @@
 
 function love.load()
   Object = require "classic"
-  require "orange"
+  require "zombies"
+  
+  
+  --font
+  --yeezyFont = love.graphics.newFont("rsc/yeezy.tff", 15)
+  love.graphics.setNewFont("yeezy.ttf", 25)
   
   --timer
-  remaining_time = 10
+  remaining_time = 13
   gameover = false
   
   
   --Graphics
-  crate = love.graphics.newImage("rsc/crate.png")
-  orange = love.graphics.newImage("rsc/zombie.png")
+  zombie = love.graphics.newImage("rsc/zombie.png")
+  background = love.graphics.newImage("rsc/background.png")
   
-  crate = {}
-    
-  crate.image = love.graphics.newImage("rsc/Protect.png")
-  crate.x = 400
-  crate.y = 500  
-  crate.width = crate.image:getWidth()
-  crate.height = crate.image:getHeight()
-    
+  player = {}
   
-  --Create a Orange image that shows up randomly
-  o1 = Orange(orange, math.random(1,700), 12, 200)
+  player.image = love.graphics.newImage("rsc/right.png")
+  player.x = 400
+  player.y = 500  
+  player.width = player.image:getWidth()
+  player.height = player.image:getHeight()
+  
+  
+  --Create a zombie that shows up randomly
+  zomb = zom(zombie, math.random(1,700), 12, 200)
   --orange's height
-  print(o1.height)
   
   --Score
   score = 0
   
+  --Sound
+  swordSwing = love.audio.newSource('rsc/sword.mp3', 'static')
+  death = love.audio.newSource('rsc/death.mp3', 'static')
+  mystery = love.audio.newSource('rsc/mystery.mp3', 'static')
 end
 
 
 function love.update(dt)
   
+  mystery:play()
+  
+  if gameover then
+    return
+  end
   
   local windowWidth = love.graphics.getWidth()
   
  --Crate movement
  if love.keyboard.isDown("right") then
-    crate.x = crate.x + 5
+    player.x = player.x + 5
+    player.image = love.graphics.newImage("rsc/right.png")
     
-    if crate.x > windowWidth - 100 then
+    if player.x > windowWidth - 100 then
       
-       crate.x = 700
+       player.x = 700
        
     end
     
   elseif love.keyboard.isDown("left") then
     
-    crate.x = crate.x - 5
+    player.x = player.x - 5
+    player.image = love.graphics.newImage("rsc/left.png")
 
-    if crate.x < 0 then
+    if player.x < 0 then
       
-       crate.x = 0
+       player.x = 0
        
     end
     
   elseif love.keyboard.isDown("up") then
     
-    crate.y = crate.y - 5
+    player.y = player.y - 5
     
   elseif love.keyboard.isDown("down") then
     
-    crate.y = crate.y + 5
-    
+    player.y = player.y + 5
   
-  if love.keyboard.isDown("s") then
-    crate.image = love.graphics.newImage("rsc/crate.png")
-    
-  end
-    
+  elseif love.keyboard.isDown("space") then
   
-    remaining_time = remaining_time - 1 * dt
+  if player.x > 400 then
+    
+  player.image = love.graphics.newImage("rsc/attackRight.png")
+  swordSwing:play()
+  print(player.image)
+  
+  elseif player.x < 400 then
+
+  player.image = love.graphics.newImage("rsc/attackLeft.png")
+  swordSwing:play()
+  
+ end 
+  
+end
+
+remaining_time = remaining_time - 1 * dt
     
     if remaining_time <= 0 then
       
       gameover = true
-      o1.x = 900
-      o1.y = 900
       
     end
   
-  end
-  
-  --Rain circles
-    o1.y = o1.y + o1.speed * dt
+  --Rain zombies
+    zomb.y = zomb.y + zomb.speed * dt
     
-    if o1.y > 601 then
+    if zomb.y > 601 then
       
-       o1.x = math.random(1,700)
-       o1.y = 12
+       zomb.x = math.random(1,700)
+       zomb.y = 12
+       score = score -1
        
     end
 
@@ -99,38 +121,25 @@ end
 
 function love.draw()
   
+  love.graphics.draw(background, 1,1)
+  love.graphics.draw(player.image,player.x,player.y)
   love.graphics.print("Score: " .. score, 600, 200)
   love.graphics.print("Timer: " .. remaining_time, 600, 150)
-  love.graphics.draw(crate.image,crate.x,crate.y)
   
-
+  
   --Uses the orange draw function in the orange class
-  o1:draw()
+  zomb:draw()
   
   if gameover then
-    love.graphics.print("Gameover, your score is " .. score, 300,200)
-
+    love.graphics.print("Gameover, your score is " .. score,200,200)
   end
   
-  if checkCollision(crate, o1) then
+  if checkCollision(player, zomb) then
       score = score +1
-      o1.x = math.random(1,800)
-      o1.y = 12
+      zomb.x = math.random(1,800)
+      zomb.y = 12
+      death:play()
   end
-  
---o1.x = math.random(1,800)
-  
- --[[ if score < 1 then
-    crate.image = love.graphics.newImage("rsc/Protect.png")
-  elseif score < 2 then
-    crate.image = love.graphics.newImage("rsc/crate1.png")
-  elseif score < 3 then
-    crate.image = love.graphics.newImage("rsc/crate2.png")
-  elseif score < 4 then
-    crate.image = love.graphics.newImage("rsc/crate3.png")
-  else
-    crate.image = love.graphics.newImage("rsc/fullCrate.png")
-  end]]
   
   end
   
